@@ -243,6 +243,20 @@
   font-size: 0.9rem;
   color: #6b7280;
   margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+/* MAP ICON FIX - Specific styles */
+.location i {
+  color: #dc3545 !important;
+  margin-right: 0.5rem !important;
+  font-size: 1rem !important;
+  width: 16px !important;
+  height: 16px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 /* Category Badge */
@@ -263,20 +277,6 @@
 .loading {
   opacity: 0.6;
   pointer-events: none;
-}
-
-.loading::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 40px;
-  height: 40px;
-  margin: -20px 0 0 -20px;
-  border: 3px solid #f3f3f3;
-  border-top: 3px solid #ff385c;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
@@ -335,6 +335,10 @@
 
   .card-img-top {
     height: 200px;
+  }
+  
+  .location i {
+    font-size: 0.9rem !important;
   }
 }
 </style>
@@ -449,9 +453,10 @@
                 <span class="price">₹<%= listing.price.toLocaleString("en-IN") %> <small>/night</small></span>
                 <span class="tax-info">+ 18% GST</span>
               </p>
+              <!-- MAP ICON FIXED -->
               <div class="location">
-                <i class="fas fa-map-marker-alt me-1"></i>
-                <%= listing.location %>
+                <i class="fas fa-map-marker-alt"></i>
+                <%= listing.location || 'Location not specified' %>
               </div>
             </div>
           </div>
@@ -532,5 +537,10 @@ document.addEventListener('DOMContentLoaded', function() {
       this.parentElement.style.background = 'transparent';
     });
   });
+
+  // Ensure Font Awesome icons load
+  if (typeof FontAwesome !== 'undefined') {
+    console.log('Font Awesome loaded successfully');
+  }
 });
 </script>
