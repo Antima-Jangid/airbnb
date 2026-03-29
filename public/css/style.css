@@ -120,3 +120,22 @@ align-items: space-evenly;
    height: 400px;
    width:  80vh;
 }
+/* Map responsive fix */
+.map-container {
+  width: 100% !important;
+  height: 400px !important;
+  min-height: 400px !important;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    height: 300px !important;
+    margin: 20px 0;
+  }
+}
+
+/* Bootstrap grid fix */
+.row > [class*="col-"] {
+  padding: 1rem;
+}

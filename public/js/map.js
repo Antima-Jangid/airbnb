@@ -1,26 +1,34 @@
+// public/js/map.js - Responsive fix
 mapboxgl.accessToken = window.mapToken;
 
-const coordinates = window.coordinates;
-const locationName = window.locationName;
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v12',
+  center: window.coordinates || [-74.5, 40],
+  zoom: window.coordinates ? 12 : 2
+});
 
-if (!coordinates || coordinates.length !== 2) {
-    console.log("Invalid coordinates!");
-} else {
-    const map = new mapboxgl.Map({
-        container: 'map',
-        style: "mapbox://styles/mapbox/streets-v12",
-        center: coordinates,
-        zoom: 9
+// ✅ RESIZE HANDLER - Ye important hai!
+window.addEventListener('resize', () => {
+  map.resize();
+});
+
+map.on('load', () => {
+  if (window.coordinates?.length === 2) {
+    new mapboxgl.Marker()
+      .setLngLat(window.coordinates)
+      .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(
+        `<h4><strong>${window.locationName}</strong></h4>`
+      ))
+      .addTo(map);
+  }
+  
+  // Fly to location
+  if (window.coordinates) {
+    map.flyTo({
+      center: window.coordinates,
+      zoom: 14,
+      essential: true
     });
-
-    // Create marker
-    const marker = new mapboxgl.Marker({color: 'red'})
-        .setLngLat(coordinates)
-        .addTo(map);
-
-    // Attach popup to the marker
-    const popup = new mapboxgl.Popup({ offset: 25 }) // offset so it doesn’t overlap marker
-        .setHTML(`<p>${locationName}</p>`);
-
-    marker.setPopup(popup).togglePopup(); // bind popup to marker and open it
-}
+  }
+});
