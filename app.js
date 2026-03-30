@@ -74,9 +74,9 @@ passport.deserializeUser(User.deserializeUser());
 
 // Flash & current user middleware — only once
 app.use((req, res, next) => {
+    res.locals.currUser = req.user|| null;
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-    res.locals.currUser = req.user;
     next();
 });
 
@@ -95,8 +95,8 @@ app.use((err, req, res, next) => {
     let { statusCode = 500, message = "Something went wrong" } = err;
     res.status(statusCode).render("listings/error.ejs", { message });
 });
-
+const port = process.env.PORT || 3000; 
 // Server start
-app.listen(8080, () => {
-    console.log("App is listening on port 8080");
+app.listen(port, () => {
+    console.log(`Server on port ${port}`);
 });
