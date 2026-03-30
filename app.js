@@ -86,14 +86,12 @@ app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
 // 404 handler
-app.use("*", (req, res) => {
-    // next(new ExpressError(404, "Page not found"));
-    res.status(404).json({ error: 'Page not found' });
+app.all("*", (req, res, next) => {
+    next(new ExpressError(404, "Page not found"));
 });
 
 // Error handler
 app.use((err, req, res, next) => {
-    console.error('ERROR:', err.stack);
     let { statusCode = 500, message = "Something went wrong" } = err;
     res.status(statusCode).render("listings/error.ejs", { message });
 });
