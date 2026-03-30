@@ -21,5 +21,5 @@ Database:
 Other Tools:
     Mongoose
     Cloudinary (for image uploads)
-    Map API (TomTom / Mapbox)
+    Map API (Mapbox)
     Render (Deployment)
